@@ -2,10 +2,15 @@ import React from "react";
 import Modal from "react-modal";
 import { TfiClose } from "react-icons/tfi";
 import css from "./ImageModal.module.css";
+import { ImageModalProps } from "./ImageModal.types";
 
 Modal.setAppElement("#root");
 
-export const ImageModal = ({ modalIsOpen, onRequestClose, data }) => {
+export const ImageModal: React.FC<ImageModalProps> = ({
+  modalIsOpen,
+  onRequestClose,
+  data,
+}) => {
   const customStyles = {
     content: {
       width: "100%",
@@ -36,7 +41,11 @@ export const ImageModal = ({ modalIsOpen, onRequestClose, data }) => {
       <button onClick={onRequestClose} className={css.closeModalBtn}>
         <TfiClose />
       </button>
-      <img className={css.imageLarge} src={data} alt="" />
+      {data ? (
+        <img className={css.imageLarge} src={data} alt="" />
+      ) : (
+        <p>No image available</p>
+      )}
     </Modal>
   );
 };

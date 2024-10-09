@@ -6,6 +6,7 @@
 
 .image {
   width: 100%;
+  min-width: 150px;
   height: 300px;
   display: block;
   object-fit: cover;

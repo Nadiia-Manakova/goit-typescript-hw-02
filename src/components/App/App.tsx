@@ -7,26 +7,27 @@ import SearchBar from "../SearchBar/SearchBar";
 import { Loader } from "../Loader/Loader";
 import { ImageModal } from "../ImageModal/ImageModal";
 import { LoadMoreBtn } from "../LoadMoreBtn/LoadMoreBtn";
+import { ImageItem } from "../ImageGallery/ImageGallery.types";
 import css from "./App.module.css";
 
 export const App = () => {
-  const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [modalData, setModalData] = useState(null);
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [page, setPage] = useState(1);
-  const [topic, setTopic] = useState("");
-  const [totalImages, setTotalImages] = useState(0);
+  const [images, setImages] = useState<ImageItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [modalData, setModalData] = useState<string | null>(null);
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [topic, setTopic] = useState<string>("");
+  const [totalImages, setTotalImages] = useState<number>(0);
 
-  const handleSearch = async (searchTopic) => {
+  const handleSearch = async (searchTopic: string) => {
     setImages([]);
     setPage(1);
     setTopic(searchTopic);
     loadImages(searchTopic, 1);
   };
 
-  const loadImages = async (searchTopic, pageNumber) => {
+  const loadImages = async (searchTopic: string, pageNumber: number) => {
     try {
       setLoading(true);
       setError(null);
@@ -43,12 +44,16 @@ export const App = () => {
         );
       } else {
         setImages((prevImages) => [...prevImages, ...images]);
-        setTotalImages(total); // Обновляем общее количество изображений
+        setTotalImages(total);
       }
     } catch (error) {
-      setError(error.message);
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Произошла неизвестная ошибка");
+      }
       Notiflix.Notify.failure(
-        "Whoops, something went wrong! Please try reloading this page!",
+        "Упс, что-то пошло не так! Пожалуйста, попробуйте перезагрузить страницу!",
         { position: "center-center" }
       );
     } finally {
@@ -62,7 +67,7 @@ export const App = () => {
     loadImages(topic, nextPage);
   };
 
-  const openModal = (imageData) => {
+  const openModal = (imageData: string) => {
     setModalData(imageData);
     setIsOpen(true);
   };
