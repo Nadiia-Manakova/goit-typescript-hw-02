@@ -1,0 +1,13 @@
+.imageGallery {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.imageGalleryItem {
+  flex: 1 0 15%; /* Пример ширины элемента; измените по необходимости */
+  box-sizing: border-box;
+}
