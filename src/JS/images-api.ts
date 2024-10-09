@@ -4,7 +4,25 @@ const unsplash = createApi({
   accessKey: "0386rkY-S1KlZPrziZdIWT7g3iIU2_BhA6_kAajp7bc",
 });
 
-export const fetchImagesWithTopic = async (topic, page = 1, perPage = 10) => {
+interface UnsplashImage {
+  id: string;
+  urls: {
+    small: string;
+    full: string;
+  };
+  alt_description: string | null;
+}
+
+interface FetchImagesResponse {
+  images: UnsplashImage[];
+  total: number;
+}
+
+export const fetchImagesWithTopic = async (
+  topic: string,
+  page: number = 1,
+  perPage: number = 10
+): Promise<FetchImagesResponse> => {
   try {
     const response = await unsplash.search.getPhotos({
       query: topic,
