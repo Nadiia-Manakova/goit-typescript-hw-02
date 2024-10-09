@@ -57,3 +57,12 @@
 input::placeholder {
   color: lightgrey;
 }
+
+@media (max-width: 600px) {
+  .section {
+    flex-direction: column;
+  }
+  .btn {
+    width: 100%;
+  }
+}
